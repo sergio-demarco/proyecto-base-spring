@@ -4,32 +4,44 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Continente {
+public class Club {
+
 	/* ATTRIBUTES */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@OneToOne
+	Equipo equipo;
+
 	String nombre;
-	
+
 	/* CONSTRUCTORS */
-	public Continente(String nombre) {
+	public Club() {
+		this.nombre = "";
+	}
+
+	public Club(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
+	public Club(String nombre, Equipo equipo) {
+		this.nombre = nombre;
+		this.equipo = equipo;
+	}
+
+	/* AUX METHODS */
 	/* SETTERS */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	
-	/* GETTERS */
-	public Long getId() {
-		return this.id;
-	}
-	
 	public String getNombre() {
 		return this.nombre;
 	}
+	
+	public Equipo getEquipo() {
+		return this.equipo;
+	}
+	
+	/* GETTERS */
 }
