@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.Operacion;
 
 @Controller
 public class ControladorLogin {
@@ -21,6 +22,7 @@ public class ControladorLogin {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioLogin servicioLogin;
+	private Operacion operacion;
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
@@ -65,6 +67,12 @@ public class ControladorLogin {
 	// Escucha la url /, y redirige a la URL /login, es lo mismo que si se invoca la url /login directamente.
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
+		return new ModelAndView("redirect:/login");
+	}
+	@RequestMapping(path = "/operacion", method = RequestMethod.POST)
+	public ModelAndView irAOperacion(@ModelAttribute("operacion") Operacion operacion, HttpServletRequest request) {
+		ModelMap model = new ModelMap();
+		Operacion operacionARealizar= operacion.consultaroperacion(operacion);
 		return new ModelAndView("redirect:/login");
 	}
 }
