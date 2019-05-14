@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.unlam.tallerweb1.modelo.Usuario;
+import ar.edu.unlam.tallerweb1.modelo.Operacion;
 import ar.edu.unlam.tallerweb1.servicios.ServicioLogin;
+import ar.edu.unlam.tallerweb1.servicios.ServicioOperacion;
+
 
 @Controller
 public class ControladorLogin {
@@ -21,6 +24,8 @@ public class ControladorLogin {
 	// @Service o @Repository y debe estar en un paquete de los indicados en applicationContext.xml
 	@Inject
 	private ServicioLogin servicioLogin;
+	@Inject
+	private ServicioOperacion servicioOperacion;
 
 	// Este metodo escucha la URL localhost:8080/NOMBRE_APP/login si la misma es invocada por metodo http GET
 	@RequestMapping("/login")
@@ -66,5 +71,13 @@ public class ControladorLogin {
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public ModelAndView inicio() {
 		return new ModelAndView("redirect:/login");
+	}
+	
+	@RequestMapping(path = "/operacion", method = RequestMethod.POST)
+	public ModelAndView irAOperacion(@ModelAttribute("operacion") Operacion operacion, HttpServletRequest request) {
+		ModelMap model = new ModelMap();
+		Operacion resultadoOperacion= servicioOperacion.consultarOperacion(operacion);
+		model.put("resultado", resultadoOperacion);
+		return new ModelAndView("operacion", model);
 	}
 }

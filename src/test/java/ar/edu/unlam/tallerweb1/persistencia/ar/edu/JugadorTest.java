@@ -119,10 +119,10 @@ public class JugadorTest extends SpringTest {
 	public void elClubDelJugadorPuedeSerRecuperado() {
 		Session session = getSession();
 		
-		Equipo boca = new Equipo("BOCA");
+		Equipo boca = new Equipo("BOCA",5);
 		session.save(boca);
 		
-		Equipo jorge = new Equipo("JORGE");
+		Equipo jorge = new Equipo("JORGE",1);
 		session.save(jorge);
 		
 		List<Jugador> jugadores = new LinkedList<Jugador>();
