@@ -28,6 +28,11 @@ public class Ciudad {
 		this.ubicacionGeografica = ubicacionGeografica;
 		this.pais = pais;
 	}
+	
+	public Ciudad(String nombre, Ubicacion ubicacionGeografica) {
+		this.nombre = nombre;
+		this.ubicacionGeografica = ubicacionGeografica;
+	}
 
 	/* SETTERS */
 	public void setNombre(String nombre) {
