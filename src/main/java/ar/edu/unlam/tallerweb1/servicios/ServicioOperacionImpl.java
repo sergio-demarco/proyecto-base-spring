@@ -12,16 +12,36 @@ public class ServicioOperacionImpl implements ServicioOperacion {
 	@Override
 	public Operacion consultarOperacion (Operacion operacion) {
 		
-		int valor1= operacion.getValor1();
-		int valor2= operacion.getValor2();
-		String operador=operacion.getOperador();
-		int resultado=0;
-		if(operador=="suma"){resultado=valor1+valor2;}
-		if(operador=="resta"){resultado=valor1-valor2;}
-		if(operador=="division"){resultado=valor1/valor2;}
-		if(operador=="multiplicacion"){resultado=valor1*valor2;}
-		operacion.setResultado(Integer.toString(resultado));
-		return operacion;
+		String nombreOperacion = operacion.getNombre();
+		String cadena=operacion.getCadena();
+		String resultadoCadena= aplicarOperacion(nombreOperacion,cadena);
+		operacion.setCadenaResultado(resultadoCadena);
+		return operacion;	
+	}
+	
+	private String aplicarOperacion(String nombreOperacion,String cadena) {
+		String resultadoCadena = null;
+		if(nombreOperacion=="pasarAMayuscula"){resultadoCadena=pasarAMayuscula(cadena);}
+		if(nombreOperacion=="pasarAMiniscula"){resultadoCadena=pasarAMiniscula(cadena);}
+		if(nombreOperacion=="invertirOrden"){resultadoCadena=invertirOrden(cadena);}
+		if(nombreOperacion=="cantidadDeCaracteres"){resultadoCadena=String.valueOf(cantidadDeCaracteres(cadena));}
+		return resultadoCadena;
+	}
+	private String pasarAMayuscula (String cadena) {
+		return cadena.toUpperCase();
+	}
+	private String pasarAMiniscula (String cadena) {
+		return cadena.toLowerCase();
+	}
+	private String invertirOrden (String cadena) {
+		String cadenaInvertida="";
+		for (int i = cadena.length()-1; i>=0; i--){
+			cadenaInvertida += cadena.charAt(i);
+        }
+		return cadenaInvertida;
+	}
+	private int cantidadDeCaracteres (String cadena) {
+		return cadena.length();
 	}
 
 }

@@ -11,10 +11,9 @@ public class Operacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String operador;
-	private int valor1;
-	private int valor2;
-	private String resultado;
+	private String nombre;
+	private String cadena;
+	private String cadenaResultado;
 	
 	public Long getId() {
 		return id;
@@ -22,29 +21,22 @@ public class Operacion {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getOperador() {
-		return operador;
+	public String getNombre() {
+		return nombre;
 	}
-	public void setOperador(String operador) {
-		this.operador = operador;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-	public int getValor1() {
-		return valor1;
+	public String getCadena() {
+		return cadena;
 	}
-	public void setValor1(int valor1) {
-		this.valor1 = valor1;
+	public void setCadena(String cadena) {
+		this.cadena = cadena;
 	}
-	public int getValor2() {
-		return valor2;
+	public String getCadenaResultado() {
+		return cadenaResultado;
 	}
-	public void setValor2(int valor2) {
-		this.valor2 = valor2;
-	}
-	public String getResultado() {
-		return resultado;
-	}
-
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
+	public void setCadenaResultado(String cadenaResultado) {
+		this.cadenaResultado = cadenaResultado;
 	}
 }

@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<div class = "container">
-			<h1>El resultado de <b>${resultado.operador}</b> sobre <b> ${resultado.valor1};${resultado.valor2} </b> es: <b>${resultado.resultado}</b> </h1>
+			<h1>El resultado de <b>${resultado.nombre}</b> sobre <b> ${resultado.cadena}</b> es: <b>${resultado.cadenaResultado}</b> </h1>
 		</div>
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
