@@ -15,7 +15,7 @@ public class Objeto {
 	private Long id;
 
 	int integer;
-	String string;
+	private String string;
 
 	public Objeto() {
 		this.integer = 1;

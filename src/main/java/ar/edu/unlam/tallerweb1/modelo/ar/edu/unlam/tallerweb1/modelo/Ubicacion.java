@@ -11,9 +11,8 @@ public class Ubicacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	Double latitud;
-	Double longitud;
+	private Double latitud;
+	private Double longitud;
 	
 	/* CONSTRUCTORS */
 	public Ubicacion(Double latitud, Double longitud) {

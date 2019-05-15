@@ -14,13 +14,13 @@ public class Ciudad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	String nombre;
+	private String nombre;
 	
 	@OneToOne
-	Ubicacion ubicacionGeografica;
+	private Ubicacion ubicacionGeografica;
 	
 	@ManyToOne
-	Pais pais;
+	private Pais pais;
 
 	/* CONSTRUCTORS */
 	public Ciudad(String nombre, Ubicacion ubicacionGeografica, Pais pais) {

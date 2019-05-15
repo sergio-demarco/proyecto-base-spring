@@ -15,9 +15,9 @@ public class Club {
 	private Long id;
 
 	@OneToOne
-	Equipo equipo;
+	private Equipo equipo;
 
-	String nombre;
+	private String nombre;
 
 	/* CONSTRUCTORS */
 	public Club() {

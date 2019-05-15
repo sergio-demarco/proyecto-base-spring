@@ -14,9 +14,9 @@ public class Jugador {
 	private Long id;
 
 	@ManyToOne
-	Equipo equipo;
+	private Equipo equipo;
 
-	String nombre;
+	private String nombre;
 
 	/* CONSTRUCTORS */
 	public Jugador() {

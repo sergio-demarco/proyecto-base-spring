@@ -15,10 +15,10 @@ public class Equipo {
 	private Long id;
 
 	@OneToOne
-	Club club;
+	private Club club;
 
-	String nombre;
-	Integer cantidadDeCampeonatos;
+	private String nombre;
+	private Integer cantidadDeCampeonatos;
 
 	/* CONSTRUCTORS */
 	public Equipo() {

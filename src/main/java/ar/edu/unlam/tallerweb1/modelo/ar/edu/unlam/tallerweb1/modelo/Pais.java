@@ -14,17 +14,15 @@ public class Pais {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	int habitantes;
-	
-	String nombre;
-	String idioma;
+	private int habitantes;
+	private String nombre;
+	private String idioma;
 	
 	@OneToOne
-	Ciudad capital;
+	private Ciudad capital;
 	
 	@ManyToOne
-	Continente continente;
+	private Continente continente;
 
 	/* CONSTRUCTORS */
 	public Pais(String nombre, int habitantes, String idioma, Ciudad capital, Continente continente) {

@@ -12,7 +12,7 @@ public class Continente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	String nombre;
+	private String nombre;
 	
 	/* CONSTRUCTORS */
 	public Continente(String nombre) {
