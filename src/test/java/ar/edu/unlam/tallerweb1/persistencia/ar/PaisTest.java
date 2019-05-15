@@ -32,53 +32,68 @@ public class PaisTest extends SpringTest {
 	@Transactional
 	@Rollback
 	public void recuperarTodasLasCiudadesDelHemisferioSur(){
-		//El ecuador esta a Latitud: -2.0000000 / Longitud: -77.5000000 / 
+		//La latitud del ecuador es por definición 0° (cero grados).
 		
 		Session session = getSession();
 
 		// UBICACIONES 
-		Ubicacion ubicacion1 = new Ubicacion(-10.0, -77.0); //este esta x debajo
+		Ubicacion ubicacion1 = new Ubicacion(40.41, -3.70);
 		session.save(ubicacion1);
 
-		Ubicacion ubicacion2 = new Ubicacion(-1.0, -77.0); //este esta x arriba
+		Ubicacion ubicacion2 = new Ubicacion(40.71, -74.00);
 		session.save(ubicacion2);
 
-		Ubicacion ubicacion3 = new Ubicacion(-1.0, -78.0); //este esta x arriba
+		Ubicacion ubicacion3 = new Ubicacion(-34.61, -58.37);
 		session.save(ubicacion3);
 
 		// CONTINENTES 
-		Continente continente1 = new Continente("Europa");
+		Continente continente1 = new Continente("America del Sur");
 		session.save(continente1);
 
 		Continente continente2 = new Continente("America del Norte");
 		session.save(continente2);
-
-		// PAISES 
-		Pais pais1 = new Pais("España", 1, "Español", "Madrid", continente1);
-		session.save(pais1);
-
-		Pais pais2 = new Pais("Estados Unidos", 1, "Ingles", "Washington", continente2);
-		session.save(pais2);
-
-		Pais pais3 = new Pais("Canada", 1, "Ingles", "Nose", continente2);
-		session.save(pais3);
+		
+		Continente continente3 = new Continente("Europa");
+		session.save(continente3);
 
 		// CIUDADES 
-		Ciudad ciudad1 = new Ciudad("Madrid", ubicacion1, pais1);
-		session.save(ciudad1);
+		Ciudad madrid = new Ciudad("Madrid", ubicacion1);//long -3.70 , lat 40.41
+		session.save(madrid);
 
-		Ciudad ciudad2 = new Ciudad("Nueva York", ubicacion2, pais2);
-		session.save(ciudad2);
+		Ciudad newYork = new Ciudad("Nueva York", ubicacion2);//long -74 lat 40.71
+		session.save(newYork);
 
-		Ciudad ciudad3 = new Ciudad("Nosejojo", ubicacion3, pais3);
-		session.save(ciudad3);
+		Ciudad buenosAires = new Ciudad("Buenos Aires", ubicacion3);// long -58.37 lat -34.61
+		session.save(buenosAires);
+		
+		// PAISES 
+		Pais espania = new Pais("España", 1, "Español", madrid, continente3);
+		session.save(espania);
+
+		Pais eeuu = new Pais("Estados Unidos", 1, "Ingles", newYork, continente2);
+		session.save(eeuu);
+
+		Pais argentina = new Pais("Argentina", 1, "Español", buenosAires, continente2);
+		session.save(argentina);
+		
+		//Assign each country to each city
+		//todo ver la funcionalidad que permitia hacer la insercion si no estaba insertada
+		madrid.setPais(espania);
+		session.update(madrid);
+
+		newYork.setPais(eeuu);
+		session.update(newYork);
+
+		buenosAires.setPais(argentina);
+		session.update(buenosAires);
 		
 		List<Ciudad> result = 
 				(List<Ciudad>) session.createCriteria(Ciudad.class)
 				.createAlias("ubicacionGeografica","u")
-				.add(Restrictions.lt("u.latitud",-2.0))
+				.add(Restrictions.lt("u.latitud",0.00))
 				.list();
 		
+		//Solo buenos aires esta por debajo del ecuador
 		assertThat(result.size()).isEqualByComparingTo(1);
 	}
 	
@@ -86,52 +101,69 @@ public class PaisTest extends SpringTest {
 	@Transactional
 	@Rollback
 	public void recuperarTodosLosPaisesCuyaCapitalEstanAlNorteDelTropicoDeCancer(){
-		//El tropico de cancer esta a : Latitud: 23,5 / Longitud: 0
+		//Este paralelo está situado actualmente a una latitud de 23°26'16" al norte del Ecuador
+		// osea latitud 23.4377777778
 		
 		Session session = getSession();
 
 		// UBICACIONES 
-		Ubicacion ubicacion1 = new Ubicacion(24.0, 10.0);
+		Ubicacion ubicacion1 = new Ubicacion(40.41, -3.70);
 		session.save(ubicacion1);
 
-		Ubicacion ubicacion2 = new Ubicacion(20.0, 20.0);
+		Ubicacion ubicacion2 = new Ubicacion(40.71, -74.00);
 		session.save(ubicacion2);
 
-		Ubicacion ubicacion3 = new Ubicacion(30.0, 30.0);
+		Ubicacion ubicacion3 = new Ubicacion(-34.61, -58.37);
 		session.save(ubicacion3);
 
 		// CONTINENTES 
-		Continente continente1 = new Continente("Europa");
+		Continente continente1 = new Continente("America del Sur");
 		session.save(continente1);
 
 		Continente continente2 = new Continente("America del Norte");
 		session.save(continente2);
-
-		// PAISES 
-		Pais pais1 = new Pais("España", 1, "Español", "Madrid", continente1);
-		session.save(pais1);
-
-		Pais pais2 = new Pais("Estados Unidos", 1, "Ingles", "Washington", continente2);
-		session.save(pais2);
-
-		Pais pais3 = new Pais("Canada", 1, "Ingles", "Nose", continente2);
-		session.save(pais3);
+		
+		Continente continente3 = new Continente("Europa");
+		session.save(continente3);
 
 		// CIUDADES 
-		Ciudad ciudad1 = new Ciudad("Madrid", ubicacion1, pais1);
-		session.save(ciudad1);
+		Ciudad madrid = new Ciudad("Madrid", ubicacion1);//long -3.70 , lat 40.41
+		session.save(madrid);
 
-		Ciudad ciudad2 = new Ciudad("Nueva York", ubicacion2, pais2);
-		session.save(ciudad2);
+		Ciudad newYork = new Ciudad("Nueva York", ubicacion2);//long -74 lat 40.71
+		session.save(newYork);
 
-		Ciudad ciudad3 = new Ciudad("Nosejojo", ubicacion3, pais3);
-		session.save(ciudad3);
+		Ciudad buenosAires = new Ciudad("Buenos Aires", ubicacion3);// long -58.37 lat -34.61
+		session.save(buenosAires);
+		
+		// PAISES 
+		Pais espania = new Pais("España", 1, "Español", madrid, continente3);
+		session.save(espania);
+
+		Pais eeuu = new Pais("Estados Unidos", 1, "Ingles", newYork, continente2);
+		session.save(eeuu);
+
+		Pais argentina = new Pais("Argentina", 1, "Español", buenosAires, continente2);
+		session.save(argentina);
+		
+		//Assign each country to each city
+		//todo ver la funcionalidad que permitia hacer la insercion si no estaba insertada
+		madrid.setPais(espania);
+		session.update(madrid);
+
+		newYork.setPais(eeuu);
+		session.update(newYork);
+
+		buenosAires.setPais(argentina);
+		session.update(buenosAires);
 		
 		List<Ciudad> result = 
 				(List<Ciudad>) session.createCriteria(Ciudad.class)
 				.createAlias("ubicacionGeografica","u")
-				.add(Restrictions.gt("u.latitud", 23.5)).list();
+				.add(Restrictions.gt("u.latitud",23.43))
+				.list();
 		
+		//Tanto Madrid como New York estan por derriba de la latitud del tropico de cancer
 		assertThat(result.size()).isEqualByComparingTo(2);
 	}
 	
@@ -141,99 +173,129 @@ public class PaisTest extends SpringTest {
 	public void recuperarTodosLosPaisesDelContinenteEuropeo(){
 		Session session = getSession();
 
-		/* UBICACIONES */
-		Ubicacion ubicacion1 = new Ubicacion(10.0, 10.0);
+		// UBICACIONES 
+		Ubicacion ubicacion1 = new Ubicacion(40.41, -3.70);
 		session.save(ubicacion1);
 
-		Ubicacion ubicacion2 = new Ubicacion(20.0, 20.0);
+		Ubicacion ubicacion2 = new Ubicacion(40.71, -74.00);
 		session.save(ubicacion2);
 
-		Ubicacion ubicacion3 = new Ubicacion(30.0, 30.0);
+		Ubicacion ubicacion3 = new Ubicacion(-34.61, -58.37);
 		session.save(ubicacion3);
 
-		/* CONTINENTES */
-		Continente continente1 = new Continente("Europa");
+		// CONTINENTES 
+		Continente continente1 = new Continente("America del Sur");
 		session.save(continente1);
 
 		Continente continente2 = new Continente("America del Norte");
 		session.save(continente2);
+		
+		Continente continente3 = new Continente("Europa");
+		session.save(continente3);
 
-		/* PAISES */
-		Pais pais1 = new Pais("España", 1, "Español", "Madrid", continente1);
-		session.save(pais1);
+		// CIUDADES 
+		Ciudad madrid = new Ciudad("Madrid", ubicacion1);//long -3.70 , lat 40.41
+		session.save(madrid);
 
-		Pais pais2 = new Pais("Estados Unidos", 1, "Ingles", "Washington", continente2);
-		session.save(pais2);
+		Ciudad newYork = new Ciudad("Nueva York", ubicacion2);//long -74 lat 40.71
+		session.save(newYork);
 
-		Pais pais3 = new Pais("Canada", 1, "Ingles", "Nose", continente2);
-		session.save(pais3);
+		Ciudad buenosAires = new Ciudad("Buenos Aires", ubicacion3);// long -58.37 lat -34.61
+		session.save(buenosAires);
+		
+		// PAISES 
+		Pais espania = new Pais("España", 1, "Español", madrid, continente3);
+		session.save(espania);
 
-		/* CIUDADES */
-		Ciudad ciudad1 = new Ciudad("Madrid", ubicacion1, pais1);
-		session.save(ciudad1);
+		Pais eeuu = new Pais("Estados Unidos", 1, "Ingles", newYork, continente2);
+		session.save(eeuu);
 
-		Ciudad ciudad2 = new Ciudad("Nueva York", ubicacion2, pais2);
-		session.save(ciudad2);
+		Pais argentina = new Pais("Argentina", 1, "Español", buenosAires, continente2);
+		session.save(argentina);
+		
+		//Assign each country to each city
+		//todo ver la funcionalidad que permitia hacer la insercion si no estaba insertada
+		madrid.setPais(espania);
+		session.update(madrid);
 
-		Ciudad ciudad3 = new Ciudad("Nosejojo", ubicacion3, pais3);
-		session.save(ciudad3);
+		newYork.setPais(eeuu);
+		session.update(newYork);
+
+		buenosAires.setPais(argentina);
+		session.update(buenosAires);
 		
 		List<Pais> result = 
 				(List<Pais>) session.createCriteria(Pais.class)
 				.createAlias("continente","c")
 				.add(Restrictions.eq("c.nombre", "Europa")).list();
 		
+		//Solo Espania esta en Europa
 		assertThat(result.size()).isEqualByComparingTo(1);
 	}
-
+	
 	@Test
 	@Transactional
 	@Rollback
 	public void recuperarPaisesHablaInglesa() {
-
 		Session session = getSession();
 
-		/* UBICACIONES */
-		Ubicacion ubicacion1 = new Ubicacion(10.0, 10.0);
+		// UBICACIONES 
+		Ubicacion ubicacion1 = new Ubicacion(40.41, -3.70);
 		session.save(ubicacion1);
 
-		Ubicacion ubicacion2 = new Ubicacion(20.0, 20.0);
+		Ubicacion ubicacion2 = new Ubicacion(40.71, -74.00);
 		session.save(ubicacion2);
 
-		Ubicacion ubicacion3 = new Ubicacion(30.0, 30.0);
+		Ubicacion ubicacion3 = new Ubicacion(-34.61, -58.37);
 		session.save(ubicacion3);
 
-		/* CONTINENTES */
+		// CONTINENTES 
 		Continente continente1 = new Continente("America del Sur");
 		session.save(continente1);
 
 		Continente continente2 = new Continente("America del Norte");
 		session.save(continente2);
+		
+		Continente continente3 = new Continente("Europa");
+		session.save(continente3);
 
-		/* PAISES */
-		Pais pais1 = new Pais("Argentina", 1, "Español", "La Plata", continente1);
-		session.save(pais1);
+		// CIUDADES 
+		Ciudad madrid = new Ciudad("Madrid", ubicacion1);//long -3.70 , lat 40.41
+		session.save(madrid);
 
-		Pais pais2 = new Pais("Estados Unidos", 1, "Ingles", "Washington", continente2);
-		session.save(pais2);
+		Ciudad newYork = new Ciudad("Nueva York", ubicacion2);//long -74 lat 40.71
+		session.save(newYork);
 
-		Pais pais3 = new Pais("Canada", 1, "Ingles", "Nose", continente2);
-		session.save(pais3);
+		Ciudad buenosAires = new Ciudad("Buenos Aires", ubicacion3);// long -58.37 lat -34.61
+		session.save(buenosAires);
+		
+		// PAISES 
+		Pais espania = new Pais("España", 1, "Español", madrid, continente3);
+		session.save(espania);
 
-		/* CIUDADES */
-		Ciudad ciudad1 = new Ciudad("Buenos Aires", ubicacion1, pais1);
-		session.save(ciudad1);
+		Pais eeuu = new Pais("Estados Unidos", 1, "Ingles", newYork, continente2);
+		session.save(eeuu);
 
-		Ciudad ciudad2 = new Ciudad("Nueva York", ubicacion2, pais2);
-		session.save(ciudad2);
+		Pais argentina = new Pais("Argentina", 1, "Español", buenosAires, continente2);
+		session.save(argentina);
+		
+		//Assign each country to each city
+		//todo ver la funcionalidad que permitia hacer la insercion si no estaba insertada
+		madrid.setPais(espania);
+		session.update(madrid);
 
-		Ciudad ciudad3 = new Ciudad("Nosejojo", ubicacion3, pais3);
-		session.save(ciudad3);
+		newYork.setPais(eeuu);
+		session.update(newYork);
+
+		buenosAires.setPais(argentina);
+		session.update(buenosAires);
 		
 		List<Pais> result = 
 				(List<Pais>) session.createCriteria(Pais.class)
 				.add(Restrictions.eq("idioma", "Ingles")).list();
 		
-		assertThat(result.size()).isEqualByComparingTo(2);
+		//Solo en eeuu se habla Ingles
+		assertThat(result.size()).isEqualByComparingTo(1);
 	}
+	
 }
